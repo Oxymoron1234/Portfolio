@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Portfolio</title>
+    <style>
+        /* Base Styles & Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #0a192f;
+            color: #e6f1ff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #64ffda;
+        }
+
+        h1 {
+            font-size: 4rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #8892b0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #64ffda;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        /* Layout & Containers */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 0;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-scrolled {
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #64ffda;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            position: relative;
+            font-weight: 500;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #64ffda;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #64ffda;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #64ffda;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        .hero-title {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.7s;
+        }
+
+        .hero-description {
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.9s;
+        }
+
+        .hero-button {
+            display: inline-block;
+            padding: 12px 25px;
+            margin-top: 30px;
+            background: transparent;
+            color: #64ffda;
+            border: 1px solid #64ffda;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 1.1s;
+        }
+
+        .hero-button:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-5px);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .about-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            list-style-type: none;
+            margin-top: 20px;
+        }
+
+        .skills-list li {
+            position: relative;
+            padding-left: 20px;
+            color: #8892b0;
+        }
+
+        .skills-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: #64ffda;
+        }
+
+        .profile-img {
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.2s;
+        }
+
+        /* .profile-img img {
+            width: 100%;
+            border-radius: 4px;
+            filter: grayscale(100%) contrast(1.1) sepia(100%) hue-rotate(190deg) saturate(500%);
+            transition: all 0.3s ease;
+            display: block;
+        } */
+
+
+        .profile-img.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .profile-img-wrapper {
+            position: relative;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* .profile-img-wrapper::after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #64ffda;
+            top: 20px;
+            left: 20px;
+            z-index: -1;
+            border-radius: 4px;
+            transition: all 0.3s ease; 
+        } */
+        /* When hovering, show original image */
+        .profile-img-wrapper:hover img {
+            filter: none;
+        }
+
+        .profile-img-wrapper:hover::after {
+            top: 15px;
+            left: 15px;
+        }
+
+        .profile-img img {
+            width: 100%;
+            border-radius: 4px;
+            transition: transform 0.5s ease;
+            /* Only transition the transform property */
+            display: block;
+            border-radius: 40%;
+
+        }
+
+        .profile-img-wrapper:hover img {
+            transform: scale(1.5);
+            border-radius: 50%;
+        }
+
+        /* Resume Section */
+        #resume {
+            background-color: #0a192f;
+        }
+
+        .resume-container {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .resume-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .resume-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .download-btn {
+            padding: 10px 20px;
+            background: transparent;
+            color: #64ffda;
+            border: 1px solid #64ffda;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .resume-section {
+            margin-bottom: 40px;
+        }
+
+        .resume-section h3 {
+            font-size: 1.8rem;
+            border-bottom: 1px solid #233554;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .resume-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .resume-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .resume-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .resume-item-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e6f1ff;
+        }
+
+        .resume-item-company,
+        .resume-item-location {
+            color: #64ffda;
+            font-weight: 500;
+        }
+
+        .resume-item-date {
+            color: #8892b0;
+            font-style: italic;
+        }
+
+        .resume-item-description {
+            margin-top: 10px;
+        }
+
+        .resume-item-description ul {
+            list-style-type: none;
+        }
+
+        .resume-item-description li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: #8892b0;
+        }
+
+        .resume-item-description li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: #64ffda;
+        }
+
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .project-card {
+            background-color: #112240;
+            border-radius: 4px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .folder-icon {
+            color: #64ffda;
+            font-size: 1.8rem;
+        }
+
+        .project-links a {
+            margin-left: 15px;
+            font-size: 1.2rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .project-description {
+            font-size: 0.9rem;
+            color: #a8b2d1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            margin-top: 20px;
+            font-size: 0.8rem;
+        }
+
+        .project-tech li {
+            margin-right: 15px;
+            color: #a8b2d1;
+        }
+
+        /* Add or update the projects-header style */
+        .projects-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .projects-header h2 {
+            margin-bottom: 0;
+            /* Remove bottom margin from h2 */
+        }
+
+        .view-all-btn {
+            padding: 10px 20px;
+            background: transparent;
+            color: #64ffda;
+            border: 1px solid #64ffda;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .view-all-btn:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .demo-preview {
+            position: fixed;
+    z-index: 1000;
+    display: none;
+    background: #0a192f;
+    border: 1px solid #64ffda;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 10px 30px rgba(2, 12, 27, 0.7);
+    /* Center positioning */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.demo-preview img {
+    max-width: 600px; /* Increased max-width for better visibility */
+    max-height: 400px; /* Increased max-height for better visibility */
+    display: block;
+    object-fit: contain;
+}
+
+        /* Blog Section */
+        #blog {
+            background-color: #0a192f;
+        }
+
+        .blog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .view-all-btn {
+            padding: 10px 20px;
+            background: transparent;
+            color: #64ffda;
+            border: 1px solid #64ffda;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-all-btn:hover {
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background-color: #112240;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .blog-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-date {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #64ffda;
+            color: #0a192f;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #e6f1ff;
+        }
+
+        .blog-excerpt {
+            color: #8892b0;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .blog-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            padding-right: 25px;
+        }
+
+        .blog-link::after {
+            content: '→';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-link:hover::after {
+            transform: translate(5px, -50%);
+        }
+
+        .blog-categories {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .blog-category {
+            font-size: 0.7rem;
+            background-color: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+            padding: 3px 10px;
+            border-radius: 30px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Contact Section */
+        #contact {
+            text-align: center;
+            min-height: 60vh;
+        }
+
+        .contact-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .contact-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-text {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.2s;
+        }
+
+        .contact-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: transparent;
+            color: #64ffda;
+            border: 1px solid #64ffda;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.4s;
+        }
+
+        .contact-button.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-button:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-5px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px 0;
+            text-align: center;
+            color: #8892b0;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .social-links li {
+            margin: 0 15px;
+        }
+
+        .social-links a {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                position: absolute;
+                right: 0;
+                top: 70px;
+                background-color: #112240;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                transform: translateX(100%);
+                transition: transform 0.5s ease;
+                box-shadow: 0 10px 30px rgba(2, 12, 27, 0.7);
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links li {
+                margin: 20px 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .profile-img {
+                margin-top: 50px;
+            }
+
+            .resume-item-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Blog Card Hover Animation */
+        .blog-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(2, 12, 27, 0.2);
+        }
+
+        /* Blog Categories Animation */
+        .blog-category {
+            transition: background-color 0.3s ease;
+        }
+
+        .blog-category:hover {
+            background-color: rgba(100, 255, 218, 0.2);
+        }
+
+        /* Blog Link Animation */
+        .blog-link {
+            transition: color 0.3s ease;
+        }
+
+        .blog-link:hover {
+            color: #64ffda;
+        }
+
+        /* Loading Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .blog-card {
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Ashish</a>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="Ashish_kr_Jha_DE.pdf">Resume</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-subtitle">Hi, my name is</div>
+                <h1 class="hero-title">Ashish Kumar Jha.</h1>
+                <h1 class="hero-title" style="color: #8892b0;">I build things for the web.</h1>
+                <p class="hero-description">
+                    I'm a Data Engineer specializing in building (and occasionally designing) exceptional digital
+                    experiences.
+                    Currently, I'm focused on building accessible, human-centered products.
+                </p>
+                <a href="#projects" class="hero-button">Check out my work!</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-grid">
+                <div class="about-content">
+                    <p>
+                        Hello! My name is Ashish Kumar Jha, and I have a deep passion for building scalable, data-driven
+                        solutions. My journey into data engineering started when I automated my first ETL pipeline,
+                        optimizing data delivery and reducing processing time significantly. That experience sparked my
+                        fascination with cloud computing, big data, and real-time analytics.
+                    </p>
+                    <p>
+                        My current focus is on building scalable, high-performance data architectures that power
+                        business intelligence and analytics. Whether it's ingesting terabytes of data, optimizing Spark
+                        jobs, or implementing data lakes, I thrive on creating solutions that turn raw data into
+                        actionable insights.
+                    </p>
+                    <p>
+                        Here are a few technologies I've been working with recently:
+                    </p>
+                    <ul class="skills-list">
+                        <li>Python</li>
+                        <li>PySpark</li>
+                        <li>Kafka</li>
+                        <li>AWS</li>
+                        <li>MYSQL</li>
+                        <li>MongoDB</li>
+
+                    </ul>
+                </div>
+                <div class="profile-img">
+                    <div class="profile-img-wrapper">
+                        <img src="images/image2-Photoroom.jpg" alt="Profile Photo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <div class="projects-header">
+                <h2>Some Things I've Built</h2>
+                <a href="https://github.com/Oxymoron1234" class="view-all-btn">View More on GitHub</a>
+            </div>
+            <div class="projects-grid">
+                <!-- Projects will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog">
+        <div class="container">
+            <div class="blog-header">
+                <h2>Latest Blog Posts</h2>
+                <a href="https://medium.com/@ashishkumar_59666" class="view-all-btn">View All Posts</a>
+            </div>
+            <div class="blog-grid" id="blog-grid">
+                <!-- Blog posts will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="contact-title">Get In Touch</h2>
+            <p class="contact-text">
+                Whether you have a question or just want to say hi, I'll try my best to get back to you! My inbox is
+                always open. I'm currently looking for new opportunities, so don't hesitate to reach out.
+            </p>
+            <a href="mailto:ashishkumarjha96940@gmail.com" class="contact-button">Say Hello</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <ul class="social-links">
+            <li><a href="https://github.com/Oxymoron1234" target="_blank" rel="noopener noreferrer">🐙</a></li>
+            <li><a href="https://www.linkedin.com/in/ashishkumarjha3003" target="_blank"
+                    rel="noopener noreferrer">💼</a></li>
+            <li><a href="https://x.com/Ashishk94268124" target="_blank" rel="noopener noreferrer">🐦</a></li>
+            <li><a href="https://www.instagram.com/a.k.j47/" target="_blank" rel="noopener noreferrer">📷</a></li>
+        </ul>
+        <div>Designed & Built by Ashish Kumar Jha</div>
+        <div>© 2025 All Rights Reserved</div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Navigation
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Header Scroll Effect
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.about-content, .profile-img, .project-card, .contact-title, .contact-text, .contact-button').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                navLinks.classList.remove('active');
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Typewriter Effect for Hero Section
+        function typeWriter(text, i, element) {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(() => typeWriter(text, i, element), 100);
+            }
+        }
+
+        // Project Hover Animation
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+        // Add to your existing script section
+        function showLoadingState() {
+            const blogGrid = document.getElementById('blog-grid');
+            blogGrid.innerHTML = '<div class="loading">Loading blog posts...</div>';
+        }
+
+        function showErrorState(error) {
+            const blogGrid = document.getElementById('blog-grid');
+            blogGrid.innerHTML = `<div class="error">Failed to load blog posts: ${error}</div>`;
+        }
+
+        async function loadBlogPosts() {
+            try {
+                showLoadingState();
+
+                // Simulate API call with setTimeout
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                const blogGrid = document.getElementById('blog-grid');
+                blogGrid.innerHTML = blogPosts.map(post => createBlogPost(post)).join('');
+
+                // Observe new blog cards for animation
+                document.querySelectorAll('.blog-card').forEach(card => {
+                    observer.observe(card);
+                });
+            } catch (error) {
+                showErrorState(error);
+                console.error('Error loading blog posts:', error);
+            }
+        }
+
+        // Add this to your existing script section ------ for blog dynamic content
+        const blogPosts = [
+            {
+                title: "Understanding Real-Time Data Streaming Pipelines",
+                excerpt: "Apache Kafka and Confluent Kafka: A Deep Dive into Real-Time Data Streaming",
+                date: "March 5, 2025",
+                image: "images/image.jpg",
+                categories: ["Data Engineering", "Kafka"],
+                link: "https://medium.com/@ashishkumar_59666/apache-kafka-and-confluent-kafka-a-deep-dive-into-real-time-data-streaming-1acfe87c83eb"
+            },
+            {
+                title: "Data Engineering & AI: A Powerful Combination",
+                excerpt: "The Convergence of Data Engineering, Cloud Engineering, and AI: A Transformative Era",
+                date: "March 1, 2025",
+                image: "images/de_ai.jpg",
+                categories: ["Cloud", "Architecture"],
+                link: "https://medium.com/@ashishkumar_59666/the-convergence-of-data-engineering-cloud-engineering-and-ai-a-transformative-era-b8162b6a938b"
+            },
+            {
+                title: "The Evolution of Data Lakes",
+                excerpt: "Modern Data Lake Techniques: Delta Lake, Apache Iceberg, and Apache Hudi",
+                date: "February 28, 2025",
+                image: "images/iceburg_hufi_delta.png",
+                categories: ["Data Engineering", "ETL"],
+                link: "https://medium.com/@ashishkumar_59666/modern-data-lake-techniques-delta-lake-apache-iceberg-and-apache-hudi-271427f76b1b"
+            }
+        ];
+
+        function createBlogPost(post) {
+            return `
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="${post.image}" alt="${post.title}">
+                        <div class="blog-date">${post.date}</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-categories">
+                            ${post.categories.map(category =>
+                `<span class="blog-category">${category}</span>`
+            ).join('')}
+                        </div>
+                        <h3 class="blog-title">${post.title}</h3>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                        <a href="${post.link}" class="blog-link">Read More</a>
+                    </div>
+                </article>
+            `;
+        }
+
+        function loadBlogPosts() {
+            const blogGrid = document.getElementById('blog-grid');
+            blogGrid.innerHTML = blogPosts.map(post => createBlogPost(post)).join('');
+
+            // Observe new blog cards for animation
+            document.querySelectorAll('.blog-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // this is realted to project section 
+        const projectsData = [
+            {
+                title: "Crypto Data Analysis",
+                description: "Efficient near-realtime crypto pipeline that ingests CDC data from DynamoDB and updates an Apache Icerberg table every 15 minutes. Query insights seamlessly with AWS Athena and visualize via QuickSight dashboards.",
+                techStack: ["AWS DynamoDB", "AWS Kinesis", "AWS S3", "AWS Glue", "Apache Hudi", "AWS Athen", "AWS QuickSight"],
+                githubLink: "https://github.com/Oxymoron1234/Crypto-Data-Processing",
+                demoLink: "images/crypto.png",
+                icon: "📁"
+            },
+            {
+                title: "Airline Data Ingestion",
+                description: "This project sets up an incremental data ingestion pipeline for airline data b. The solution efficiently handles daily data loads, leverages Glue’s Job Bookmarking for incremental processing, and ensures a robust monitoring and notification system to facilitate seamless data operations.",
+                techStack: ["AWS S3", "Spark", "AWS SNS", "AWS Redshift", "AWS Event Bridge"],
+                githubLink: "https://github.com/Oxymoron1234/Airline_Data_Ingestion_Project",
+                demoLink: "images/airline.png",
+                icon: "📁"
+            },
+            {
+                title: "Stock Market Processing",
+                description: "Built a real-time data processing pipeline for stock market analysis using Apache Kafka, AWS (S3, Glue, EC2), and SQL.Enabled faster data-driven decision-making, reducing analysis time by 40%.",
+                techStack: ["AWS EMR", "AWS EC2", "AWS Athena", "SQL", "Kafka"],
+                githubLink: "https://github.com/Oxymoron1234/Stock-Market-Processing",
+                demoLink: "images/Architecture.jpg",
+                icon: "📁"
+            }
+        ];
+
+        function createProjectCard(project) {
+            return `
+            <div class="project-card">
+                <div class="project-top">
+                    <div class="folder-icon">${project.icon}</div>
+                    <div class="project-links">
+                        <a href="${project.githubLink}" target="_blank" rel="noopener noreferrer">🔗</a>
+                        <a href="${project.demoLink}" class="demo-link" data-preview="${project.demoLink}" rel="noopener noreferrer">👁️</a>
+                    </div>
+                </div>
+                <h3 class="project-title">${project.title}</h3>
+                <div class="project-description">
+                    ${project.description}
+                </div>
+                <ul class="project-tech">
+                    ${project.techStack.map(tech => `<li>${tech}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+        }
+
+        function loadProjects() {
+            const projectsGrid = document.querySelector('.projects-grid');
+            projectsGrid.innerHTML = projectsData.map(project => createProjectCard(project)).join('');
+
+            // Create preview element
+            const preview = document.createElement('div');
+            preview.className = 'demo-preview';
+            const previewImg = document.createElement('img');
+            preview.appendChild(previewImg);
+            document.body.appendChild(preview);
+
+            // Add hover handlers for demo links
+            document.querySelectorAll('.demo-link').forEach(link => {
+        link.addEventListener('mouseenter', (e) => {
+            const previewUrl = e.target.getAttribute('data-preview');
+            if (previewUrl && previewUrl !== '#') {
+                previewImg.src = previewUrl;
+                preview.style.display = 'block';
+                
+                // Check if it's the Airline Data Ingestion project
+                const projectCard = e.target.closest('.project-card');
+                const projectTitle = projectCard.querySelector('.project-title').textContent;
+                
+                
+                    // Position at bottom
+                    preview.style.top = 'auto';
+                    preview.style.bottom = '20px';
+                    preview.style.left = '50%';
+                    preview.style.transform = 'translateX(-50%)';
+                
+            }
+        });
+
+                link.addEventListener('mouseleave', () => {
+                    preview.style.display = 'none';
+                    // document.removeEventListener('mousemove', positionPreview);
+                });
+            });
+
+            // Function to position the preview
+            function positionPreview(e) {
+                const x = e.pageX + 20;
+                const y = e.pageY + 20;
+
+                // Keep preview within viewport
+                const rightEdge = window.innerWidth - preview.offsetWidth - 20;
+                const bottomEdge = window.innerHeight - preview.offsetHeight - 20;
+
+                preview.style.left = `${Math.min(x, rightEdge)}px`;
+                preview.style.top = `${Math.min(y, bottomEdge)}px`;
+            }
+
+            // Observe new project cards for animation
+            document.querySelectorAll('.project-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // Call this function when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBlogPosts();
+            loadProjects(); // Add this line
+        });
+
+    </script>
+</body>
+
+</html>
